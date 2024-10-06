@@ -24,7 +24,7 @@ public class Main {
             // raw sound data
             byte[] sound = parser.data;
 
-            // samples per channel, e.g. samples[0][1] is the 1st sample of 1st channel
+            // samples per channel, e.g. samples[0][1] is the 2nd sample in the 1st channel
             float[][] samples = WavParser.getSamples(parser.data, parser.numChannels, parser.blockAlign, parser.bitsPerSample);
 
             // Creates a copy of the Demo file in my desktop, change path name to whatever you want
