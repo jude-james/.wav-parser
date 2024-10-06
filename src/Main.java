@@ -2,8 +2,7 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
-        //String path = "Demo.wav";
-        String path = "/Users/judejames/Desktop/Temp Wav Files/347 Midnight Demons.wav";
+        String path = "Demo.wav";
         File file = new File(path);
 
         WavParser parser = new WavParser(file);
