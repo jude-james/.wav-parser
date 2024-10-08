@@ -152,7 +152,7 @@ public class WavParser {
 
         ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 
-        if (bitsPerSample != 8 && bitsPerSample != 16 && bitsPerSample != 32) {
+        if (bitsPerSample != 8 && bitsPerSample != 16 && bitsPerSample != 24 && bitsPerSample != 32) {
             System.out.println(STR."Unsupported bits per sample: \{bitsPerSample}");
             return samples;
         }
@@ -160,9 +160,23 @@ public class WavParser {
         for (int sample = 0; sample < numSamplesPerChannel; sample++) {
             for (int channel = 0; channel < numChannels; channel++) {
                 if (buffer.position() < data.length) {
-                    if (bitsPerSample == 8) samples[channel][sample] = (buffer.get() & 0xff); // converting to unsigned 0-255
-                    else if (bitsPerSample == 16) samples[channel][sample] = buffer.getShort();
-                    else samples[channel][sample] = buffer.getInt();
+                    if (bitsPerSample == 8) {
+                        samples[channel][sample] = (buffer.get() & 0xff); // converting to unsigned 0-255
+                    }
+                    else if (bitsPerSample == 16) {
+                        samples[channel][sample] = buffer.getShort();
+                    }
+                    else if (bitsPerSample == 24) {
+                        samples[channel][sample] = (
+                                (buffer.get())
+                                        | ((buffer.get()) <<  8)
+                                        | ((buffer.get()) << 16)
+                        );
+
+                    }
+                    else {
+                        samples[channel][sample] = buffer.getInt();
+                    }
                 }
             }
         }
